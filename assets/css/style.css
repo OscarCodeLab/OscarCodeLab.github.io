@@ -1,4 +1,3 @@
-
 /* --- 1. Variables (Modern Tech Palette) --- */
 :root {
     /* This template uses a professional "Modern Tech" color scheme. */
@@ -12,10 +11,10 @@
     --dark-text-color: #343A40;
     --light-text-color: #6c757d;
     --card-bg-color: #ffffff;
-    
+
     /* Fonts */
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Lato', sans-serif;
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Lato', Arial, sans-serif;
 }
 
 /* --- 2. Base & Reset Styles --- */
@@ -27,6 +26,8 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 70px; /* sticky menu will not cover section titles */
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -35,10 +36,11 @@ body {
     line-height: 1.8;
     background-color: var(--light-bg-color);
     color: var(--dark-text-color);
+    overflow-x: hidden; /* never allow sideways scrolling */
 }
 
 .container {
-    width: 90%;
+    width: 100%;
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
@@ -59,6 +61,15 @@ img {
     height: auto;
 }
 
+/* Visible keyboard focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
 /* --- 3. Header --- */
 header {
     background: var(--primary-color);
@@ -73,6 +84,7 @@ header h1 {
     font-weight: 700;
     margin-bottom: 15px;
     letter-spacing: 1px;
+    overflow-wrap: break-word;
 }
 
 header p {
@@ -98,7 +110,7 @@ header p {
 
 /* --- 4. Navigation --- */
 nav {
-    background-color: rgba(26, 42, 76, 0.95); /* Adjusted for new primary color */
+    background-color: rgba(26, 42, 76, 0.95);
     backdrop-filter: blur(5px);
     position: sticky;
     top: 0;
@@ -108,12 +120,14 @@ nav {
 
 nav ul {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     list-style: none;
     padding: 10px 0;
 }
 
 nav ul li a {
+    display: inline-block;
     color: var(--white-color);
     font-weight: 400;
     padding: 15px 25px;
@@ -177,6 +191,7 @@ nav ul li a:hover::after {
 .profile-photo {
     width: 280px;
     height: 280px;
+    flex-shrink: 0;
     border-radius: 50%;
     object-fit: cover;
     border: 7px solid var(--white-color);
@@ -185,6 +200,7 @@ nav ul li a:hover::after {
 
 .about-text {
     flex: 1;
+    min-width: 0;
 }
 
 .about-text p {
@@ -196,7 +212,7 @@ nav ul li a:hover::after {
 /* --- 5.5 Project Cards --- */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
     gap: 40px;
 }
 
@@ -208,6 +224,7 @@ nav ul li a:hover::after {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .project-card:hover {
@@ -219,6 +236,32 @@ nav ul li a:hover::after {
     width: 100%;
     height: 220px;
     object-fit: cover;
+    object-position: top center;
+}
+
+/* Stand-in box for projects that are not uploaded yet */
+.img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 220px;
+    padding: 15px;
+    text-align: center;
+    background: linear-gradient(135deg, #e8eef6, #d3deee);
+    color: var(--secondary-color);
+}
+
+.img-placeholder i {
+    font-size: 2rem;
+    opacity: 0.75;
+}
+
+.img-placeholder span {
+    font-size: 0.95rem;
+    font-weight: 700;
 }
 
 .project-card-content {
@@ -233,6 +276,7 @@ nav ul li a:hover::after {
     font-size: 1.8rem;
     margin-bottom: 15px;
     color: var(--primary-color);
+    overflow-wrap: break-word;
 }
 
 .project-card-content p {
@@ -243,6 +287,7 @@ nav ul li a:hover::after {
 
 .project-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     margin-top: auto;
 }
@@ -253,10 +298,13 @@ nav ul li a:hover::after {
     color: var(--white-color);
     padding: 12px 20px;
     border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 1rem;
     font-weight: 700;
+    line-height: 1.4;
     text-align: center;
     transition: all 0.3s ease;
-    flex: 1;
+    flex: 1 1 140px;
     letter-spacing: 0.5px;
     border: 2px solid transparent;
 }
@@ -278,6 +326,15 @@ nav ul li a:hover::after {
     color: var(--white-color);
 }
 
+/* Greyed-out button for links that are not ready yet */
+.btn-disabled,
+.btn-secondary.btn-disabled {
+    background: #eef1f5;
+    color: #8a94a6;
+    border: 2px solid #dde3ec;
+    cursor: not-allowed;
+    pointer-events: none;
+}
 
 /* --- 6. Tabular Skills Section --- */
 #skills .container {
@@ -297,6 +354,7 @@ nav ul li a:hover::after {
 
 .skill-column {
     padding: 0 20px;
+    min-width: 0;
 }
 
 .skill-column:not(:last-child) {
@@ -314,6 +372,7 @@ nav ul li a:hover::after {
     color: var(--accent-color);
     margin-right: 15px;
     width: 40px;
+    flex-shrink: 0;
 }
 
 .skill-header h3 {
@@ -334,6 +393,7 @@ nav ul li a:hover::after {
     border-bottom: 1px solid #f1f3f5;
     position: relative;
     padding-left: 25px;
+    overflow-wrap: break-word;
 }
 
 .skill-list li::before {
@@ -383,7 +443,7 @@ nav ul li a:hover::after {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: 1rem; /* 16px stops iPhones zooming in on tap */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -391,11 +451,12 @@ nav ul li a:hover::after {
 .contact-form textarea:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(41, 182, 246, 0.25); /* Adjusted for new accent color */
+    box-shadow: 0 0 0 3px rgba(41, 182, 246, 0.25);
 }
 
 .contact-form button.btn {
     width: 100%;
+    flex: none;
     padding: 15px;
     font-size: 1.1rem;
     font-weight: 700;
@@ -418,6 +479,8 @@ footer p {
 }
 
 /* --- 9. Responsive Design --- */
+
+/* Tablets */
 @media (max-width: 992px) {
     .skills-table {
         grid-template-columns: 1fr 1fr;
@@ -427,33 +490,140 @@ footer p {
     }
 }
 
+/* Phones and small tablets */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 2.8rem;
+    header {
+        padding: 50px 0;
     }
-    
+
+    header h1 {
+        font-size: 2.4rem;
+        line-height: 1.2;
+    }
+
+    header p {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    nav ul {
+        padding: 6px 0;
+    }
+
+    nav ul li a {
+        padding: 12px 14px;
+        font-size: 0.98rem;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    .section h2 {
+        font-size: 2.2rem;
+        margin-bottom: 55px;
+    }
+
     .about-content {
         flex-direction: column;
+        gap: 30px;
         text-align: center;
     }
 
-    #projects .container {
-        padding: 0 5px; 
+    .profile-photo {
+        width: 200px;
+        height: 200px;
     }
 
+    .about-text p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
+
+    /* THE MAIN FIX: one project card per row on phones */
     .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .project-card-content {
+        padding: 22px;
+    }
+
+    .project-card-content h3 {
+        font-size: 1.45rem;
+    }
+
+    .project-card-content p {
+        margin-bottom: 22px;
     }
 
     .skills-table {
         grid-template-columns: 1fr;
         padding: 20px;
-        gap: 40px;
+        gap: 30px;
+    }
+
+    .skill-column {
+        padding: 0;
     }
 
     .skill-column:not(:last-child) {
         border-right: none;
         border-bottom: 1px solid #e9ecef;
         padding-bottom: 30px;
+    }
+
+    .skill-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .contact-form {
+        padding: 24px 20px;
+    }
+
+    footer {
+        margin-top: 40px;
+        padding: 30px 0;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    nav ul li a {
+        padding: 12px 10px;
+        font-size: 0.92rem;
+    }
+
+    .project-card-content {
+        padding: 18px;
+    }
+
+    .project-card-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .img-placeholder,
+    .project-card img {
+        height: 190px;
+    }
+}
+
+/* Respect users who turn off animations */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        transition: none !important;
     }
 }
