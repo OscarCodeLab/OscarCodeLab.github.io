@@ -1,4 +1,4 @@
-# Oscar Kolawole | Data Analyst Portfolio
+# Kolawole Opeyemi Oscar | Data Analyst Portfolio
 
 I'm a QA Engineer moving into data analysis. In QA, my job is to catch what's wrong before it reaches users. I bring the same habit to data: I check it, document what's broken, decide how to fix it, and prove my numbers match the source.
 
